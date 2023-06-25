@@ -92,7 +92,7 @@ Please refer to the Swagger documentation for detailed information about the API
 
 If your API is hosted and publicly accessible, provide a link to the hosted version here.
 
-- [http://13.127.180.105/books](https://www.example.com) - Link to the hosted version of your API.
+- [http://13.127.180.105/books](http://13.127.180.105/books) - Link to the hosted version of your API.
 
 ## License
 
