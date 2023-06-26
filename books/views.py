@@ -1,8 +1,9 @@
-from rest_framework import viewsets, permissions
-from .serializers import FilterSerializer, BooksSerializer
-from rest_framework.pagination import PageNumberPagination
-from .services import get_books
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import permissions, viewsets
+from rest_framework.pagination import PageNumberPagination
+
+from .serializers import BooksSerializer, FilterSerializer
+from .services import get_books
 
 
 class BookViewSet(viewsets.ViewSet):

@@ -1,14 +1,15 @@
-from .models import (
-    BooksBook,
-    BooksBookLanguages,
-    BooksFormat,
-    BooksBookSubjects,
-    BooksBookBookshelves,
-    BooksBookAuthors,
-    BooksAuthor,
-)
-from django.db.models import Q, Subquery, OuterRef, Prefetch, F, Value
 from django.contrib.postgres.aggregates import ArrayAgg, StringAgg
+from django.db.models import F, OuterRef, Prefetch, Q, Subquery, Value
+
+from .models import (
+    BooksAuthor,
+    BooksBook,
+    BooksBookAuthors,
+    BooksBookBookshelves,
+    BooksBookLanguages,
+    BooksBookSubjects,
+    BooksFormat,
+)
 
 
 def get_books(
@@ -107,12 +108,13 @@ def get_books(
     )
 
     books = books.order_by(F("download_count").desc(nulls_last=True))
-
-    # bookauthor_sub_qs = (
-    #     BooksBookAuthors.objects.select_related("author")
-    #     .filter(book_id=OuterRef(OuterRef("pk")))
-    #     .values("author")[:1]
-    # )
-    # author_sub_qs = BooksAuthor.objects.filter(pk__in=Subquery(bookauthor_sub_qs))
-    # books = books.annotate(author=Subquery(author_sub_qs))
+    books = books.values(
+        "id",
+        "title",
+        "language",
+        "author",
+        "subjects",
+        "bookshelves",
+        "urls",
+    )
     return books
